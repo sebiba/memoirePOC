@@ -1,0 +1,29 @@
+version: "3.7"
+services:
+  db:
+    image: mysql
+    restart: always
+    #cap_add:
+      #- SYS_NICE  # CAP_SYS_NICE
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+#    volumes:
+#      - ./database_schema:/docker-entrypoint-initdb.d/
+#  adminer:
+#    image: adminer
+#    restart: always
+#    ports:
+#      - 8083:8082
+#  app:
+#    build: .
+#    ports:
+#      - "8081:8080"
+#    environment:
+#      - spring.datasource.username=root
+#      - spring.datasource.password=root
+#      - spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+#      - spring.datasource.url=jdbc:mysql://db:3307/memoire?useUnicode=true&characterEncoding=utf8&useSSL=false
+#    depends_on:
+#      - db
