@@ -22,10 +22,11 @@ public class ShopControler {
 
     @GetMapping("/bib")
     private String showProduct(Model model){
-        List<Product> test = dbManager.getAllProduct();
-        model.addAttribute("productList",test);
-        model.addAttribute("productDetail",test.iterator().next());
-        model.addAttribute("productLike",new Product());
+        List<Product> productList = dbManager.getAllProduct();
+        Product detail = productList.iterator().next();
+        model.addAttribute("productList",productList);
+        model.addAttribute("productDetail",detail);
+        model.addAttribute("productLike",detail);
         return "bibliotheque";
     }
 
