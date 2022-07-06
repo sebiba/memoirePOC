@@ -23,26 +23,13 @@ public class dbManager {
     public Product findProductByEan(String ean){
         return productRepository.findByEan(ean);
     }
-    public User findUserByName(String name){
-        return userRepository.findByName(name);
-    }
-
     public ProductRepository getProductRepository() {
         return productRepository;
     }
 
-    public void setProductRepository(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public User findUserByName(String name){
+        return userRepository.findByName(name);
     }
-
-    public UserRepository getUserRepository() {
-        return userRepository;
-    }
-
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
     public void addUser(String name) {
         this.userRepository.save(new User(name));
     }

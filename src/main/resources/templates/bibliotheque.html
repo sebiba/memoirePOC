@@ -51,7 +51,7 @@
         </tbody>
       </table>
     </div>
-    <div class="col bg-light border rounded m-4 p-4">
+    <div id="detail" class="col bg-light border rounded m-4 p-4">
       <p>
         <span>EAN: </span>
         <span th:text="${productDetail.ean}"></span>
@@ -72,7 +72,7 @@
         <span>Nombre de like: </span>
         <span th:text="${productDetail.likers.size()}"></span>
       </p>
-      <form action="#" th:action="@{/bib/like}" method="post">
+      <form id="likerForm" action="#" th:action="@{/bib/like}" method="post">
         <input type="hidden" name="ean" th:value="${productDetail.ean}">
         <p>Nom: <input type="text" name="name"/></p>
         <p><input type="submit" value="Submit" /></p>
