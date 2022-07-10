@@ -1,32 +1,40 @@
 package com.example.testspring.Controler;
 
+import com.example.testspring.Interface.PluginInterface;
 import com.example.testspring.Model.Product;
 import com.example.testspring.Model.User;
-import com.example.testspring.dbAccess.dbManager;
+import com.example.testspring.dbAccess.DBManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
 public class ShopControler {
     @Autowired
-    dbManager dbManager ;
+    DBManager dbManager ;
+    Map<String, PluginInterface> plugins;
 
     @GetMapping("/bib")
     private String showProduct(Model model){
+        this.plugins = MainControler.getInstance().loadPlugins();
+        //TODO:chec HtmlCodePlugin
+        List<String> htmlCodePlugin = new ArrayList<>();
+        this.plugins.values().forEach(x->htmlCodePlugin.add(x.getHtmlNavBar()));
         List<Product> productList = dbManager.getAllProduct();
         Product detail = productList.iterator().next();
         model.addAttribute("productList",productList);
         model.addAttribute("productDetail",detail);
         model.addAttribute("productLike",detail);
+        model.addAttribute("Plugins",htmlCodePlugin);
         return "bibliotheque";
     }
 
@@ -56,6 +64,16 @@ public class ShopControler {
         }
         produit.addLiker(user);
         dbManager.getProductRepository().save(produit);
+        return "redirect:/bib";
+    }
+
+    @RequestMapping(value = "/bib/{plugin}",
+        method = RequestMethod.POST,
+        consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    private String pluginsRequest(@PathVariable("pluginName")String pluginName, @RequestBody MultiValueMap<String, String> formData){
+        if(this.plugins.keySet().contains(pluginName)){
+            this.plugins.get(pluginName).postRequest(formData);
+        }
         return "redirect:/bib";
     }
 }

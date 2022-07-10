@@ -1,6 +1,5 @@
 package com.example.testspring.dbAccess;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
@@ -20,13 +19,13 @@ import java.util.Map;
 
 @Aspect
 @Component
-public class dbManagerAspect {
-    private static final Logger logger = Logger.getLogger(dbManagerAspect.class.getName());
+public class DBManagerAspect {
+    private static final Logger logger = Logger.getLogger(DBManagerAspect.class.getName());
 
     @Autowired
     private ObjectMapper mapper;
 
-    @Pointcut("target(com.example.testspring.dbAccess.dbManager)")
+    @Pointcut("target(com.example.testspring.dbAccess.DBManager)")
     public void pointcut() {
     }
 

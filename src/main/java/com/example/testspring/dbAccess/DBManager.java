@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Component
-public class dbManager {
+public class DBManager {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
