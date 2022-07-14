@@ -24,17 +24,17 @@ public class ShopControler {
     Map<String, PluginInterface> plugins;
 
     @GetMapping("/bib")
-    private String showProduct(Model model){
-        this.plugins = MainControler.getInstance().loadPlugins();
-        //TODO:chec HtmlCodePlugin
-        List<String> htmlCodePlugin = new ArrayList<>();
-        this.plugins.values().forEach(x->htmlCodePlugin.add(x.getHtmlNavBar()));
+    private String showProduct(Model model) throws InterruptedException {
         List<Product> productList = dbManager.getAllProduct();
         Product detail = productList.iterator().next();
+        List<String> htmlCodePlugin = new ArrayList<>();
+        this.plugins = MainControler.getInstance().loadPlugins();
+        //TODO:chec HtmlCodePlugin
+        this.plugins.values().forEach(x->htmlCodePlugin.add(x.getHtmlNavBar()));
         model.addAttribute("productList",productList);
         model.addAttribute("productDetail",detail);
         model.addAttribute("productLike",detail);
-        model.addAttribute("Plugins",htmlCodePlugin);
+        model.addAttribute("plugins",htmlCodePlugin);
         return "bibliotheque";
     }
 
@@ -67,12 +67,12 @@ public class ShopControler {
         return "redirect:/bib";
     }
 
-    @RequestMapping(value = "/bib/{plugin}",
+    @RequestMapping(value = "/bib/test/{pluginName}",
         method = RequestMethod.POST,
         consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    private String pluginsRequest(@PathVariable("pluginName")String pluginName, @RequestBody MultiValueMap<String, String> formData){
+    private String pluginsRequest(Model model,@PathVariable("pluginName")String pluginName, @RequestBody MultiValueMap<String, String> formData){
         if(this.plugins.keySet().contains(pluginName)){
-            this.plugins.get(pluginName).postRequest(formData);
+        this.plugins.get("Recherche").getHtmlNavBar();
         }
         return "redirect:/bib";
     }

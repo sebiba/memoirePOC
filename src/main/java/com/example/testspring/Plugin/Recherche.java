@@ -6,7 +6,9 @@ import org.springframework.util.MultiValueMap;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import com.google.auto.service.AutoService;
 
+@AutoService(PluginInterface.class)
 public class Recherche implements PluginInterface {
     @Override
     public String getName() {
@@ -23,7 +25,6 @@ public class Recherche implements PluginInterface {
         }
         return content;
     }
-
     @Override
     public Void postRequest(MultiValueMap<String, String> formData) {
         return null;
