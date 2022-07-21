@@ -52,7 +52,7 @@ public class ShopControler {
     }
 
     @PostMapping("/bib/like")
-    private String likeProduct(Model model, @RequestParam String ean, @RequestParam String name, RedirectAttributes redirAttrs) {
+    private String likeProduct(@RequestParam String ean, @RequestParam String name, RedirectAttributes redirAttrs) {
         Product produit = dbManager.findProductByEan(ean);
         User user = dbManager.findUserByName(name);
         //create new user
@@ -73,9 +73,9 @@ public class ShopControler {
     @RequestMapping(value = "/bib/test/{pluginName}",
         method = RequestMethod.POST,
         consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    private String pluginsRequest(Model model,@PathVariable("pluginName")String pluginName, @RequestBody MultiValueMap<String, String> formData){
+    private String pluginsRequest(@PathVariable("pluginName")String pluginName, @RequestBody MultiValueMap<String, String> formData){
         if(this.plugins.containsKey(pluginName)){
-            return this.plugins.get("Recherche").postRequest(formData, this.dbManager.getProductRepository());
+            return this.plugins.get(pluginName).postRequest(formData, this.dbManager.getProductRepository());
         }
         return "redirect:/bib";
     }

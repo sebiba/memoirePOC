@@ -42,24 +42,12 @@ public class Product {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getEan() {
         return ean;
     }
 
-    public void setEan(String ean) {
-        this.ean = ean;
-    }
-
     public String getDesc() {
         return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
     }
 
     public Set<User> getLikers() {

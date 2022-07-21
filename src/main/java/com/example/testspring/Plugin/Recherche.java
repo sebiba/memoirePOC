@@ -3,8 +3,7 @@ package com.example.testspring.Plugin;
 import com.example.testspring.Interface.PluginInterface;
 import com.example.testspring.Model.Product;
 import com.example.testspring.Model.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.google.auto.service.AutoService;
 import org.springframework.util.MultiValueMap;
 
 import java.io.IOException;
@@ -13,11 +12,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import com.google.auto.service.AutoService;
-
 @AutoService(PluginInterface.class)
 public class Recherche implements PluginInterface {
-    private Product product;
 
     @Override
     public String getName() {

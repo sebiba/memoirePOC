@@ -1,18 +1,14 @@
 package com.example.testspring.dbAccess;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.CodeSignature;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,9 +18,6 @@ import java.util.Map;
 public class DBManagerAspect {
     private static final Logger logger = Logger.getLogger(DBManagerAspect.class.getName());
 
-    @Autowired
-    private ObjectMapper mapper;
-
     @Pointcut("target(com.example.testspring.dbAccess.DBManager)")
     public void pointcut() {
     }
@@ -32,24 +25,23 @@ public class DBManagerAspect {
     @Before("pointcut()")
     public void logMethod(JoinPoint joinPoint) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        RequestMapping mapping = signature.getMethod().getAnnotation(RequestMapping.class);
-
         Map<String, Object> parameters = getParameters(joinPoint);
-
         try {
-            logger.info(signature.getMethod().getName());
+            if(parameters.size()>0){
+                logger.info("before:\t"+signature.getMethod().getName()+"\t"+ parameters);
+            }else{
+                logger.info("before:\t"+signature.getMethod().getName());
+            }
         } catch (NullPointerException e){
             logger.warn(e.getMessage());
         }
     }
 
-    @AfterReturning(pointcut = "pointcut()", returning = "entity")
-    public void logMethodAfter(JoinPoint joinPoint, ResponseEntity<?> entity) {
+    @After("pointcut()")
+    public void logMethodAfter(JoinPoint joinPoint) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        RequestMapping mapping = signature.getMethod().getAnnotation(RequestMapping.class);
-
         try {
-            logger.info(signature.getMethod().getName());
+            logger.info("after:\t"+signature.getMethod().getName());
         } catch (NullPointerException e){
             logger.warn(e.getMessage());
         }
