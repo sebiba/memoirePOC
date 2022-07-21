@@ -20,21 +20,20 @@ import java.util.Map;
 @Controller
 public class ShopControler {
     @Autowired
-    DBManager dbManager ;
+    DBManager dbManager;
     Map<String, PluginInterface> plugins;
 
     @GetMapping("/bib")
-    private String showProduct(Model model) throws InterruptedException {
+    private String showProduct(Model model) {
         List<Product> productList = dbManager.getAllProduct();
         Product detail = productList.iterator().next();
         List<String> htmlCodePlugin = new ArrayList<>();
         this.plugins = MainControler.getInstance().loadPlugins();
-        //TODO:chec HtmlCodePlugin
         this.plugins.values().forEach(x->htmlCodePlugin.add(x.getHtmlNavBar()));
+        model.addAttribute("plugins",htmlCodePlugin);
         model.addAttribute("productList",productList);
         model.addAttribute("productDetail",detail);
         model.addAttribute("productLike",detail);
-        model.addAttribute("plugins",htmlCodePlugin);
         return "bibliotheque";
     }
 
@@ -45,6 +44,10 @@ public class ShopControler {
         Product detail = test.stream().filter(x->ean.equals(x.getEan())).findFirst().orElse(null);
         model.addAttribute("productDetail",detail);
         model.addAttribute("productLike",new Product());
+        List<String> htmlCodePlugin = new ArrayList<>();
+        this.plugins = MainControler.getInstance().loadPlugins();
+        this.plugins.values().forEach(x->htmlCodePlugin.add(x.getHtmlNavBar()));
+        model.addAttribute("plugins",htmlCodePlugin);
         return "bibliotheque";
     }
 
@@ -71,8 +74,8 @@ public class ShopControler {
         method = RequestMethod.POST,
         consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     private String pluginsRequest(Model model,@PathVariable("pluginName")String pluginName, @RequestBody MultiValueMap<String, String> formData){
-        if(this.plugins.keySet().contains(pluginName)){
-        this.plugins.get("Recherche").getHtmlNavBar();
+        if(this.plugins.containsKey(pluginName)){
+            return this.plugins.get("Recherche").postRequest(formData, this.dbManager.getProductRepository());
         }
         return "redirect:/bib";
     }

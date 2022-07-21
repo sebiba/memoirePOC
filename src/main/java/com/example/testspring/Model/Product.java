@@ -29,7 +29,7 @@ public class Product {
     public Product() {
 
     }
-
+//region get/set
     public String getName() {
         return name;
     }
@@ -65,6 +65,7 @@ public class Product {
     public Set<User> getLikers() {
         return likers;
     }
+//endregion
     public void addLiker(User user){
         this.likers.add(user);
     }
