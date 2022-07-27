@@ -1,0 +1,12 @@
+before:	toString
+after:	toString
+before:	toString
+after:	toString
+before:	getAllProduct
+before:	getAllProduct
+logAfterThrowing running .....
+Exception in com.example.testspring.dbAccess.DBManager.getAllProduct() with cause = org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+after:	getAllProduct
+logAfterThrowing running .....
+Exception in com.example.testspring.dbAccess.DBManager.getAllProduct() with cause = org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+after:	getAllProduct

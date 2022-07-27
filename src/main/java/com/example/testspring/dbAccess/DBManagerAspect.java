@@ -2,10 +2,7 @@ package com.example.testspring.dbAccess;
 
 import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.CodeSignature;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
@@ -47,6 +44,13 @@ public class DBManagerAspect {
         }
     }
 
+    @AfterThrowing(pointcut = "pointcut()", throwing = "error")
+    public void test(JoinPoint joinPoint, Throwable error){
+        logger.debug("logAfterThrowing running .....");
+        logger.error("Exception in "+
+            joinPoint.getSignature().getDeclaringTypeName()+"."+joinPoint.getSignature().getName()+
+            "() with cause = "+(error.getCause() != null ? error.getCause() : "NULL"));
+    }
     private Map<String, Object> getParameters(JoinPoint joinPoint) {
         CodeSignature signature = (CodeSignature) joinPoint.getSignature();
 
