@@ -2,7 +2,6 @@
 <FeatureModel xmlns:th="http://www.w3.org/1999/xhtml">
     <SpringAspect name="logging" url="">
         <file path="\src\main\java\com\example\testspring\dbAccess\dbManagerAspect.java" />
-        <class name="dbManagerAspect" />
     </SpringAspect>
     <SpringPreprocessor name="SGBD" url="">
         <file path="\src\main\resources\application.properties" />
@@ -65,7 +64,6 @@
     </Delta>
     <Plugin name="recherche" url="">
         <file path="src/main/java/com/example/testspring/Plugin/Recherche.java" />
-        <file path="src/main/java/com/example/testspring/Interface/PluginInterface.java" />
         <file path="src/main/resources/static/rechercheNavBar.html" />
     </Plugin>
 </FeatureModel>

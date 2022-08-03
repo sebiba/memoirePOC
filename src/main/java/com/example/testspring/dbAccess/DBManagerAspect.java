@@ -7,6 +7,8 @@ import org.aspectj.lang.reflect.CodeSignature;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ import java.util.Map;
 @Component
 public class DBManagerAspect {
     private static final Logger logger = Logger.getLogger(DBManagerAspect.class.getName());
+    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     @Pointcut("target(com.example.testspring.dbAccess.DBManager)")
     public void pointcut() {
@@ -25,9 +28,9 @@ public class DBManagerAspect {
         Map<String, Object> parameters = getParameters(joinPoint);
         try {
             if(parameters.size()>0){
-                logger.info("before:\t"+signature.getMethod().getName()+"\t"+ parameters);
+                logger.info(formatter.format(new Date())+" before:\t"+signature.getMethod().getName()+"\t"+ parameters);
             }else{
-                logger.info("before:\t"+signature.getMethod().getName());
+                logger.info(formatter.format(new Date())+" before:\t"+signature.getMethod().getName());
             }
         } catch (NullPointerException e){
             logger.warn(e.getMessage());
@@ -38,7 +41,7 @@ public class DBManagerAspect {
     public void logMethodAfter(JoinPoint joinPoint) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         try {
-            logger.info("after:\t"+signature.getMethod().getName());
+            logger.info(formatter.format(new Date())+" after:\t"+signature.getMethod().getName());
         } catch (NullPointerException e){
             logger.warn(e.getMessage());
         }
@@ -46,8 +49,7 @@ public class DBManagerAspect {
 
     @AfterThrowing(pointcut = "pointcut()", throwing = "error")
     public void test(JoinPoint joinPoint, Throwable error){
-        logger.debug("logAfterThrowing running .....");
-        logger.error("Exception in "+
+        logger.error(formatter.format(new Date())+" Exception in "+
             joinPoint.getSignature().getDeclaringTypeName()+"."+joinPoint.getSignature().getName()+
             "() with cause = "+(error.getCause() != null ? error.getCause() : "NULL"));
     }
