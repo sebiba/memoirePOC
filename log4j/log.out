@@ -1,0 +1,28 @@
+14/08/2022 19:09:06 before:	getAllProduct
+14/08/2022 19:09:07 after:	getAllProduct
+14/08/2022 19:09:29 before:	getAllProduct
+14/08/2022 19:09:29 after:	getAllProduct
+14/08/2022 19:09:30 before:	getAllProduct
+14/08/2022 19:09:30 after:	getAllProduct
+14/08/2022 19:09:34 before:	getAllProduct
+14/08/2022 19:09:34 after:	getAllProduct
+14/08/2022 19:09:35 before:	getAllProduct
+14/08/2022 19:09:35 after:	getAllProduct
+14/08/2022 19:09:36 before:	getAllProduct
+14/08/2022 19:09:36 after:	getAllProduct
+14/08/2022 19:09:38 before:	getAllProduct
+14/08/2022 19:09:38 after:	getAllProduct
+14/08/2022 19:09:42 before:	findProductByEan	{ean=2345678901234}
+14/08/2022 19:09:42 after:	findProductByEan
+14/08/2022 19:09:42 before:	findUserByName	{name=seb}
+14/08/2022 19:09:42 after:	findUserByName
+14/08/2022 19:09:42 before:	addUser	{name=seb}
+14/08/2022 19:09:42 after:	addUser
+14/08/2022 19:09:42 before:	findUserByName	{name=seb}
+14/08/2022 19:09:42 after:	findUserByName
+14/08/2022 19:09:42 before:	getProductRepository
+14/08/2022 19:09:42 after:	getProductRepository
+14/08/2022 19:09:42 before:	getAllProduct
+14/08/2022 19:09:42 after:	getAllProduct
+14/08/2022 19:09:44 before:	getAllProduct
+14/08/2022 19:09:44 after:	getAllProduct
