@@ -1,11 +1,11 @@
 package com.example.testspring.Controler;
 
 import com.example.testspring.Interface.PluginInterface;
+import com.example.testspring.PluginLoader;
 import org.springframework.stereotype.Controller;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ServiceLoader;
 
 @Controller
 public class MainControler {
@@ -22,11 +22,15 @@ public class MainControler {
      * @return Map<String, interpreter> plugin's name and the plugin
      */
     public Map<String, PluginInterface> loadPlugins(){
-        ServiceLoader<PluginInterface> serviceLoader = ServiceLoader.load(PluginInterface.class);
-        Map<String, PluginInterface> services = new HashMap<>();
-        for (PluginInterface service : serviceLoader) {
-            services.put(service.getName(), service);
+        PluginLoader pluginLoader = new PluginLoader();
+        Map<String, PluginInterface>pluginsList = new HashMap<>();
+        try {
+            for (PluginInterface plugin:pluginLoader.loadAllPlugins()) {
+                pluginsList.put(plugin.getName(),plugin);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        return services;
+        return pluginsList;
     }
 }

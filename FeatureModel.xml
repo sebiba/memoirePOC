@@ -2,12 +2,13 @@
 <FeatureModel xmlns:th="http://www.w3.org/1999/xhtml">
     <SpringAspect name="logging" url="">
         <file path="\src\main\java\com\example\testspring\dbAccess\dbManagerAspect.java" />
+        <class name="dbManagerAspect" />
     </SpringAspect>
     <SpringPreprocessor name="SGBD" url="">
         <file path="\src\main\resources\application.properties" />
         <var datasource="mysql" />
     </SpringPreprocessor>
-    <Delta name="liker" require="compte">
+    <Delta name="liker">
         <addFile>
             <file path="src/main/java/com/example/testspring/Model/User.java" />
             <file path="src/main/java/com/example/testspring/Model/UserRepository.java" />
@@ -55,12 +56,6 @@
                 </add>
             </file>
         </modif>
-    </Delta>
-    <Delta name="compte">
-        <addFile>
-            <file path="src/main/java/com/example/testspring/Model/User.java" />
-            <file path="src/main/java/com/example/testspring/Model/UserRepository.java" />
-        </addFile>
     </Delta>
     <Plugin name="recherche" url="">
         <file path="src/main/java/com/example/testspring/Plugin/Recherche.java" />
