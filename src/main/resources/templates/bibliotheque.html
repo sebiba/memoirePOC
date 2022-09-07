@@ -64,15 +64,6 @@
         <span>Description: </span>
         <span th:text="${productDetail.desc}"></span>
       </p>
-      <p>
-        <span>Nombre de like: </span>
-        <span th:text="${productDetail.likers.size()}"></span>
-      </p>
-      <form id="likerForm" action="#" th:action="@{/bib/like}" method="post">
-        <input type="hidden" name="ean" th:value="${productDetail.ean}">
-        <p>Nom: <input type="text" name="name"/></p>
-        <p><input type="submit" value="Submit" /></p>
-      </form>
     </div>
   </div>
 </div>

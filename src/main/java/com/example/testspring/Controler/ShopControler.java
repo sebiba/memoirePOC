@@ -2,7 +2,6 @@ package com.example.testspring.Controler;
 
 import com.example.testspring.Interface.PluginInterface;
 import com.example.testspring.Model.Product;
-import com.example.testspring.Model.User;
 import com.example.testspring.dbAccess.DBManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,25 +47,6 @@ public class ShopControler {
         this.plugins.values().forEach(x->htmlCodePlugin.add(x.getHtmlNavBar()));
         model.addAttribute("plugins",htmlCodePlugin);
         return "bibliotheque";
-    }
-
-    @PostMapping("/bib/like")
-    private String likeProduct(@RequestParam String ean, @RequestParam String name, RedirectAttributes redirAttrs) {
-        Product produit = dbManager.findProductByEan(ean);
-        User user = dbManager.findUserByName(name);
-        //create new user
-        if (user == null) {
-            dbManager.addUser(name);
-            user = dbManager.findUserByName(name);
-        } else {
-            if(produit.getLikers().contains(user)){
-                redirAttrs.addFlashAttribute("error", "Vous ne pouvez pas liker 2 fois le même produits");
-                return "redirect:/bib";
-            }
-        }
-        produit.addLiker(user);
-        dbManager.getProductRepository().save(produit);
-        return "redirect:/bib";
     }
 
     @RequestMapping(value = "/bib/test/{pluginName}",

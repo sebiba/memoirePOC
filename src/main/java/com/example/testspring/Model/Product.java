@@ -15,15 +15,12 @@ public class Product {
     private String code;
     @Column(name = "description")
     private String desc;
-    @ManyToMany
-    private Set<User> likers;
 
-    public Product(String name, String code, String ean, String desc, Set<User> likers) {
+    public Product(String name, String code, String ean, String desc) {
         this.name = name;
         this.code = code;
         this.ean = ean;
         this.desc = desc;
-        this.likers = likers;
     }
 
     public Product() {
@@ -50,11 +47,5 @@ public class Product {
         return desc;
     }
 
-    public Set<User> getLikers() {
-        return likers;
-    }
 //endregion
-    public void addLiker(User user){
-        this.likers.add(user);
-    }
 }

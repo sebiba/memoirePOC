@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FeatureModel xmlns:th="http://www.w3.org/1999/xhtml">
-    <SpringAspect name="logging" url="">
-        <file path="\src\main\java\com\example\testspring\dbAccess\dbManagerAspect.java" />
-        <class name="dbManagerAspect" />
+    <SpringAspect name="logging">
+        <file path="\src\main\java\com\example\testspring\dbAccess\DBManagerAspect.java" />
     </SpringAspect>
-    <SpringPreprocessor name="SGBD" url="">
-        <file path="\src\main\resources\application.properties" />
-        <var datasource="mysql" />
+    <SpringPreprocessor name="SGBD">
+        <file path="\src\main\resources\application.properties">
+            <var datasource="mysql" />
+            <var TEST="true" />
+        </file>
     </SpringPreprocessor>
-    <Delta name="liker">
-        <addFile>
-            <file path="src/main/java/com/example/testspring/Model/User.java" />
-            <file path="src/main/java/com/example/testspring/Model/UserRepository.java" />
-        </addFile>
+    <Delta name="liker" require="compte">
         <modif>
-            <file path="src/main/java/com/example/testspring/Controler/ShopControler.java">
+            <file type="java" path="src/main/java/com/example/testspring/Controler/ShopControler.java">
                 <add>
                     @PostMapping("/bib/like")
                     private String likeProduct(Model model, @RequestParam String ean, @RequestParam String name, RedirectAttributes redirAttrs) {
@@ -36,7 +33,13 @@
                     }
                 </add>
             </file>
-            <file path="src/main/java/com/example/testspring/dbAccess/dbManager.java">
+            <file type="java" path="src/main/java/com/example/testspring/Controler/ShopControler.java">
+                <add>
+                    import com.example.testspring.Model.User;
+                    import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+                </add>
+            </file>
+            <file type="java" path="src/main/java/com/example/testspring/dbAccess/DBManager.java">
                 <add>
                     public User findUserByName(String name){
                     return userRepository.findByName(name);
@@ -46,7 +49,23 @@
                     }
                 </add>
             </file>
-            <file path="src/main/resources/templates/bibliotheque.html">
+            <file type="java" path="src/main/java/com/example/testspring/dbAccess/DBManager.java">
+                <add>
+                    import com.example.testspring.Model.User;
+                    import com.example.testspring.Model.UserRepository;
+                </add>
+            </file>
+            <file type="java" path="src/main/java/com/example/testspring/dbAccess/DBManager.java">
+                <add>
+                    @Autowired
+                    private UserRepository userRepository;
+                </add>
+            </file>
+            <file type="html" path="src/main/resources/templates/bibliotheque.html">
+                <p>
+                    <span>Nombre de like: </span>
+                    <span th:text="${productDetail.likers.size()}"></span>
+                </p>
                 <add endOf="detail">
                     <form id="likerForm" action="#" th:action="@{/bib/like}" method="post">
                         <input type="hidden" name="ean" th:value="${productDetail.ean}"/>
@@ -56,9 +75,22 @@
                 </add>
             </file>
         </modif>
+        <deleteFile>
+            <file type="java" path="src/main/java/com/example/testspring/Model/Product.java" />
+        </deleteFile>
+        <addFile>
+            <file type="java" path="src/main/java/com/example/testspring/Model/Product.java" />
+        </addFile>
     </Delta>
-    <Plugin name="recherche" url="">
+    <Delta name="compte">
+        <addFile>
+            <file path="src/main/java/com/example/testspring/Model/User.java" />
+            <file path="src/main/java/com/example/testspring/Model/UserRepository.java" />
+        </addFile>
+    </Delta>
+    <Plugin name="recherche">
         <file path="src/main/java/com/example/testspring/Plugin/Recherche.java" />
+        <file path="src/main/java/com/example/testspring/Interface/PluginInterface.java" />
         <file path="src/main/resources/static/rechercheNavBar.html" />
     </Plugin>
 </FeatureModel>
